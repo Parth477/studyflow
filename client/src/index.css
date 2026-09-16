@@ -50,8 +50,15 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(79,128,96,.2
 .auth-tabs button { min-height: 34px; color: #9aa49c; border-radius: 6px; border: 0; background: transparent; font-size: 10px; font-weight: 700; }
 .auth-tabs button:hover { color: #5f6d63; }
 .auth-tabs .auth-tab-active { color: #3f5747; background: #fff; box-shadow: 0 2px 7px rgba(47,67,53,.08); }
+.auth-field { display: flex; flex-direction: column; gap: 6px; margin-top: 14px; color: #69766d; font-size: 10px; font-weight: 700; }
+.auth-field input { width: 100%; height: 40px; padding: 0 11px; color: #3f4d44; border: 1px solid #e2e9e2; border-radius: 7px; outline: none; background: #fbfdfb; font-size: 11px; font-weight: 400; transition: border-color 160ms ease, box-shadow 160ms ease; }
+.auth-field input:focus { border-color: #8bb297; box-shadow: 0 0 0 3px rgba(113,164,123,.12); }
+.auth-field input::placeholder { color: #aab5ac; }
+.auth-message { margin: 13px 0 0; padding: 9px 10px; color: #a05b4d; border-radius: 7px; background: #fff1ed; font-size: 10px; line-height: 1.45; }
+.auth-message-success { color: #527d5e; background: #eef8ef; }
 .oauth-button { width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; margin-top: 22px; color: #fff; border: 0; border-radius: 8px; background: #2d3933; box-shadow: 0 8px 16px rgba(45,57,51,.13); font-size: 11px; font-weight: 700; transition: background 160ms ease, transform 160ms ease, box-shadow 160ms ease; }
 .oauth-button:hover { background: #1e2a24; box-shadow: 0 10px 22px rgba(45,57,51,.2); transform: translateY(-1px); }
+.oauth-button:disabled { cursor: wait; opacity: .65; transform: none; }
 .oauth-button:active { transform: scale(.98); }
 .oauth-symbol { display: grid; place-items: center; width: 18px; height: 18px; color: #d5efd8; border: 1px solid rgba(213,239,216,.55); border-radius: 50%; font-size: 16px; line-height: 1; }
 .auth-legal { margin: 14px auto 0; max-width: 260px; color: #a0a9a2; text-align: center; font-size: 9px; line-height: 1.55; }

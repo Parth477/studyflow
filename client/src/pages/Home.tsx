@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Check, CheckCircle2, Circle, Loader2, LogOut, Plus, ShieldCheck, Sparkles } from "lucide-react";
+import { Check, CheckCircle2, Circle, Loader2, LogOut, Pause, Play, Plus, RotateCcw, ShieldCheck, Sparkles, Timer } from "lucide-react";
 import { startLogin } from "@/const";
 import { useAuth } from "@/_core/hooks/useAuth";
 import { trpc } from "@/lib/trpc";
@@ -67,9 +67,24 @@ function Workspace({ user, logout }: { user: { name?: string | null; email?: str
     onError: () => toast.error("Could not update that task"),
   });
   const [title, setTitle] = useState("");
+  const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+  const [timerRunning, setTimerRunning] = useState(false);
   const tasks = taskQuery.data ?? [];
   const completedCount = tasks.filter((task) => task.completed === 1).length;
   const displayName = user.name?.split(" ")[0] || "there";
+
+  useEffect(() => {
+    if (!timerRunning || secondsLeft <= 0) return;
+    const interval = window.setInterval(() => setSecondsLeft((value) => Math.max(0, value - 1)), 1000);
+    return () => window.clearInterval(interval);
+  }, [timerRunning, secondsLeft]);
+
+  useEffect(() => {
+    if (secondsLeft === 0 && timerRunning) {
+      setTimerRunning(false);
+      toast.success("Focus session complete", { description: "Take a short break before your next task." });
+    }
+  }, [secondsLeft, timerRunning]);
 
   const addTask = () => {
     const cleanTitle = title.trim();
@@ -77,6 +92,8 @@ function Workspace({ user, logout }: { user: { name?: string | null; email?: str
     createTask.mutate({ title: cleanTitle });
     setTitle("");
   };
+
+  const timerLabel = `${String(Math.floor(secondsLeft / 60)).padStart(2, "0")}:${String(secondsLeft % 60).padStart(2, "0")}`;
 
   const handleLogout = async () => {
     try {
@@ -92,6 +109,7 @@ function Workspace({ user, logout }: { user: { name?: string | null; email?: str
       <header className="workspace-header"><Brand /><div className="workspace-user"><div className="workspace-user-copy"><strong>{user.name || "StudyFlow member"}</strong><span>{user.email || "Signed in securely"}</span></div><button className="logout-button" onClick={handleLogout}><LogOut size={15} /> Sign out</button></div></header>
       <div className="workspace-content">
         <section className="workspace-welcome"><p className="auth-eyebrow"><span /> Your private workspace</p><h1>Hello, {displayName}.</h1><p>Keep today simple. What is the next thing you want to finish?</p></section>
+        <section className="focus-card-simple" aria-label="Focus timer"><div className="focus-card-heading"><div><p className="focus-label"><Timer size={13} /> Focus timer</p><strong>{timerLabel}</strong><span>{timerRunning ? "Session in progress" : secondsLeft === 0 ? "Session complete" : "Ready when you are"}</span></div><div className="focus-card-icon"><Timer size={19} /></div></div><div className="focus-actions"><button className="focus-primary" onClick={() => setTimerRunning((value) => !value)}>{timerRunning ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" />} {timerRunning ? "Pause" : "Start focus"}</button><button className="focus-secondary" onClick={() => { setSecondsLeft(25 * 60); setTimerRunning(false); }}><RotateCcw size={14} /> Reset</button><button className="focus-secondary" onClick={() => { setSecondsLeft(5 * 60); setTimerRunning(false); }}>5 min</button></div></section>
         <section className="task-card" aria-labelledby="tasks-heading">
           <div className="task-card-top"><div><h2 id="tasks-heading">Today’s tasks</h2><p>{completedCount} of {tasks.length} complete</p></div><div className="task-count">{tasks.length}</div></div>
           <form className="task-form" onSubmit={(event) => { event.preventDefault(); addTask(); }}><input value={title} onChange={(event) => setTitle(event.target.value)} placeholder="Add a task…" aria-label="Task title" maxLength={160} /><button type="submit" disabled={!title.trim() || createTask.isPending} aria-label="Add task">{createTask.isPending ? <Loader2 size={16} className="spin" /> : <Plus size={17} />}</button></form>

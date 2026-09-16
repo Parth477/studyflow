@@ -77,6 +77,18 @@ button:focus-visible, input:focus-visible { outline: 3px solid rgba(79,128,96,.2
 .workspace-welcome .auth-eyebrow { margin-bottom: 13px; }
 .workspace-welcome h1 { margin: 0; color: #2b3530; font-size: clamp(34px, 6vw, 48px); line-height: 1; letter-spacing: -.07em; }
 .workspace-welcome > p:last-child { margin: 12px 0 0; color: #89938b; font-size: 13px; }
+.focus-card-simple { margin-bottom: 14px; padding: 19px 21px; color: #f7fbf6; border-radius: 14px; background: #2c3a32; box-shadow: 0 12px 28px rgba(45,62,51,.12); }
+.focus-card-heading { display: flex; align-items: center; justify-content: space-between; }
+.focus-label { display: flex; align-items: center; gap: 6px; margin: 0 0 7px; color: #b7d9bc; font-size: 10px; font-weight: 700; }
+.focus-card-heading strong { display: block; font-size: 31px; line-height: 1; letter-spacing: -.07em; }
+.focus-card-heading span { display: block; margin-top: 6px; color: #9eb5a3; font-size: 9px; }
+.focus-card-icon { display: grid; place-items: center; width: 38px; height: 38px; color: #bce0c0; border: 1px solid rgba(188,224,192,.2); border-radius: 11px; background: rgba(255,255,255,.06); }
+.focus-actions { display: flex; gap: 7px; margin-top: 17px; }
+.focus-primary, .focus-secondary { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 33px; border-radius: 7px; font-size: 10px; font-weight: 700; }
+.focus-primary { flex: 1; color: #2e4234; background: #edf8ea; }
+.focus-primary:hover { background: #fff; }
+.focus-secondary { padding: 0 10px; color: #c0d4c3; border: 1px solid rgba(192,212,195,.22); background: rgba(255,255,255,.04); }
+.focus-secondary:hover { background: rgba(255,255,255,.1); }
 .task-card { padding: 24px 25px 25px; border: 1px solid #e6ece6; border-radius: 15px; background: #fff; box-shadow: 0 14px 38px rgba(53,73,59,.06); }
 .task-card-top { display: flex; align-items: center; justify-content: space-between; }
 .task-card-top h2 { margin: 0; color: #3c4840; font-size: 15px; letter-spacing: -.03em; }
